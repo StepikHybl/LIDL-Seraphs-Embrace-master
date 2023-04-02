@@ -2,6 +2,7 @@ const menu = document.getElementById("menu");
 const start = document.getElementById("start");
 const player = document.getElementById("player");
 let player2 = document.getElementById("player2");
+let score = 0;
 const startmenu = document.getElementById("startmenu");
 
 
@@ -135,11 +136,31 @@ start.onclick = () => {
         document.body.removeChild(enemy);
         enemies.splice(enemies.indexOf(enemy), 1);
       } else {
+         const projectiles = document.getElementsByClassName("projectile");
+         for (let i = 0; i < projectiles.length; i++) {
+           if (checkCollision(projectiles[i], enemy)) {
+             document.body.removeChild(enemy);
+             enemies.splice(enemies.indexOf(enemy), 1);
+             document.body.removeChild(projectiles[i]);
+             score++;
+             document.getElementById("score").textContent = score;
+           }
+         }
         setTimeout(moveEnemy, 80);
       }
     }
   
     moveEnemy();
+  }
+  function checkCollision(a2, b2) {
+    const aRect = a2.getBoundingClientRect();
+    const bRect = b2.getBoundingClientRect();
+    return !(
+      aRect.bottom < bRect.top ||
+      aRect.top > bRect.bottom ||
+      aRect.right < bRect.left ||
+      aRect.left > bRect.right
+    );
   }
   
   setInterval(createEnemy, 2000);

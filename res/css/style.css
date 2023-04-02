@@ -110,3 +110,9 @@ body{
 .enemy{
     position: absolute;
 }
+
+#score {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+  }
