@@ -1,2 +1,2 @@
-# LIDL-Seraphs-Embrace-master
+# LIDL-Seraphs-Embrace
 [Hraj]()
