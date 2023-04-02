@@ -5,7 +5,6 @@ let player2 = document.getElementById("player2");
 let score = 0;
 const startmenu = document.getElementById("startmenu");
 
-
 let x = 0;
 let y = 0;
 let vx = 0;
@@ -14,22 +13,22 @@ const gravity = 0.7;
 const jumpVelocity = -10;
 
 const leftBorder = 25;
-const rightBorder = window.innerWidth -170 + - player2.offsetWidth;
+const rightBorder = window.innerWidth - 170 + -player2.offsetWidth;
 const topBorder = 0;
-const bottomBorder = window.innerHeight - 280 + - player2.offsetHeight + -10;
+const bottomBorder = window.innerHeight - 280 + -player2.offsetHeight + -10;
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'w') {
+document.addEventListener("keydown", (event) => {
+  if (event.key === "w") {
     vy = jumpVelocity;
-  } else if (event.key === 'a') {
+  } else if (event.key === "a") {
     vx = -5;
-  } else if (event.key === 'd') {
+  } else if (event.key === "d") {
     vx = 5;
   }
 });
 
-document.addEventListener('keyup', (event) => {
-  if (event.key === 'a' || event.key === 'd') {
+document.addEventListener("keyup", (event) => {
+  if (event.key === "a" || event.key === "d") {
     vx = 0;
   }
 });
@@ -54,8 +53,8 @@ function update() {
     vy = 0;
   }
 
-  player2.style.left = x  + 'px';
-  player2.style.top = y  +'px';
+  player2.style.left = x + "px";
+  player2.style.top = y + "px";
 
   requestAnimationFrame(update);
 }
@@ -73,7 +72,7 @@ function launchProjectile(projectile) {
   let position = parseInt(projectile.style.top);
   let intervalId = setInterval(() => {
     position -= 5;
-    projectile.style.top = position + 'px';
+    projectile.style.top = position + "px";
     if (position <= 0) {
       clearInterval(intervalId);
       projectile.remove();
@@ -83,19 +82,18 @@ function launchProjectile(projectile) {
 }
 
 function createProjectile(x2, y2) {
-  const projectile = document.createElement('div');
-  projectile.classList.add('projectile');
-  projectile.style.top = y2 + 'px';
-  projectile.style.left = x2 + 'px';
+  const projectile = document.createElement("div");
+  projectile.classList.add("projectile");
+  projectile.style.top = y2 + "px";
+  projectile.style.left = x2 + "px";
   projectiles.push(projectile);
   document.body.appendChild(projectile);
   launchProjectile(projectile);
 }
 
-
-document.addEventListener('click', (event) => { 
-  if(!check){
-  createProjectile(event.clientX, event.clientY);
+document.addEventListener("click", (event) => {
+  if (!check) {
+    createProjectile(event.clientX, event.clientY);
   }
 });
 
@@ -107,7 +105,7 @@ function launchAllProjectiles() {
 
 setInterval(() => {
   launchAllProjectiles();
-},2000);
+}, 2000);
 
 start.onclick = () => {
   const enemies = [];
@@ -115,41 +113,41 @@ start.onclick = () => {
   function createEnemy() {
     const enemy = document.createElement("div");
     enemy.classList.add("enemy");
-    enemy.style.top = (Math.random() * 15) + 7 + "%";
+    enemy.style.top = Math.random() * 30 + 7 + "%";
     enemy.style.left = "-50px";
     enemy.style.transition = "all 0.3s linear";
-  
+
     const enemyImg = document.getElementById("enemy-img");
     const enemyImgClone = enemyImg.cloneNode(true);
     enemyImgClone.style.display = "block";
     enemy.appendChild(enemyImgClone);
-  
+
     document.body.appendChild(enemy);
     enemies.push(enemy);
-  
+
     function moveEnemy() {
       const currentLeft = parseInt(enemy.style.left);
       const newLeft = currentLeft + 10;
       enemy.style.left = newLeft + "px";
-  
+
       if (newLeft >= window.innerWidth) {
         document.body.removeChild(enemy);
         enemies.splice(enemies.indexOf(enemy), 1);
       } else {
-         const projectiles = document.getElementsByClassName("projectile");
-         for (let i = 0; i < projectiles.length; i++) {
-           if (checkCollision(projectiles[i], enemy)) {
-             document.body.removeChild(enemy);
-             enemies.splice(enemies.indexOf(enemy), 1);
-             document.body.removeChild(projectiles[i]);
-             score++;
-             document.getElementById("score").textContent = score;
-           }
-         }
+        const projectiles = document.getElementsByClassName("projectile");
+        for (let i = 0; i < projectiles.length; i++) {
+          if (checkCollision(projectiles[i], enemy)) {
+            document.body.removeChild(enemy);
+            enemies.splice(enemies.indexOf(enemy), 1);
+            document.body.removeChild(projectiles[i]);
+            score++;
+            document.getElementById("score").textContent = score;
+          }
+        }
         setTimeout(moveEnemy, 80);
       }
     }
-  
+
     moveEnemy();
   }
   function checkCollision(a2, b2) {
@@ -162,13 +160,13 @@ start.onclick = () => {
       aRect.left > bRect.right
     );
   }
-  
-  setInterval(createEnemy, 2000);
 
-menu.style.display = "none";
-document.body.style.background = "url(./res/img/battle.png)";
-player.style.display = "none";
-startmenu.style.display = "none";
-player2.style.display = "block";
-check = false;
-}
+  setInterval(createEnemy, 500);
+
+  menu.style.display = "none";
+  document.body.style.background = "url(./res/img/battle.png)";
+  player.style.display = "none";
+  startmenu.style.display = "none";
+  player2.style.display = "block";
+  check = false;
+};
